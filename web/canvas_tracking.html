@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>画布：</p>
+<canvas id="myCanvas">
+Your browser does not support the HTML5 canvas tag.
+</canvas>
+
+<script type="text/javascript">
+var c=document.getElementById("myCanvas");
+var cxt=c.getContext("2d");
+var img=new Image()
+img.src="a.jpg"
+img.onload = function(){
+    myCanvas.width = img.width
+    myCanvas.height = img.height
+    cxt.drawImage(img,0,0)
+
+}
+</script>
+
+</body>
+<script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var canvas = $("#myCanvas"),
+			ctx = canvas[0].getContext('2d'),
+			moving = false;
+
+		var getCanvasPoint = function(x,y) {
+			var canvasOffset = canvas.offset();
+			return {
+				x: x - canvasOffset.left,
+				y: y - canvasOffset.top
+			}
+		}
+
+
+		canvas.on("mousedown", function(e){
+			moving = true;
+			var point = getCanvasPoint(e.pageX, e.pageY);
+                        console.log('down', point.x, point.y)
+		});
+
+		canvas.on("mousemove", function(e){
+			if (!moving) {
+				return;
+			}
+			var point = getCanvasPoint(e.pageX, e.pageY);
+                        console.log('move', point.x, point.y)
+
+		});
+
+		canvas.on("mouseup", function(e){
+			moving = false;
+			var point = getCanvasPoint(e.pageX, e.pageY);
+                        console.log('up', point.x, point.y)
+		});
+
+	})
+
+</script>
+
+</html>
+
